@@ -16,3 +16,55 @@
   align-content: center;
   
 }
+
+.switch {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 0;
+  margin-right: 1.25rem;
+  
+  width: 60px;
+  height: 34px;
+  
+  background: transparent;
+}
+
+.switch input { 
+  display: none;
+}
+
+.switch span.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+}
+
+.switch span.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: background-color, box-shadow, transform .2s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+}

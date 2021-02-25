@@ -4,7 +4,22 @@
   box-sizing: border-box;
 }
 
-:root{
+body.dark {
+  --white: #1d1d1d;
+  --background: #1a1a1a;
+  --gray-line: #777;
+  --text: #ddd;
+  --text-highlight: #b3b9ff;
+  --title: #bbb;
+  --red: #e83f5b;
+  --green: #46d62b;
+  --blue: #5965e0;
+  --blue-dark: #4953b8;
+  --blue-twitter: #2aa9e0;
+
+}
+
+body:not(.dark) {
   --white:#fff;
   --background:#F2F3F5;
   --gray-line:#DCDDE0;

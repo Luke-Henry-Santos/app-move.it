@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react'
+import { createContext, useState, ReactNode, useEffect } from 'react'
 import challenges from '../../challenges.json'
 
 interface Challenge {
@@ -13,9 +13,9 @@ interface ChallengeContextData {
   experienceToNextLevel: number
   challengesCompleted: number
   activeChallenges: Challenge
-  levelUp: () => void
   startNewChallenge: () => void
   resetChallenge: () => void
+  completeChallenge: () => void
 }
 
 interface ChallengesProviderProps {
@@ -33,6 +33,10 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
+  useEffect(() => {
+    Notification.requestPermission()
+  }, [])
+
   function levelUp() {
     setLevel(level + 1)
   }
@@ -42,10 +46,34 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     const challenge = challenges[randomChallengeIndex]
 
     setActiveChanllenges(challenge)
+
+    new Audio('/notification.mp3').play()
+
+    if(Notification.permission === 'granted'){
+      new Notification('Novo desafio 🎉', {
+        body: `Valendo ${challenge.amount} xp!`
+      })
+    }
   }
 
   function resetChallenge() {
     setActiveChanllenges(null)
+  }
+
+  function completeChallenge() {
+    if (!activeChallenges) return
+
+    const { amount } = activeChallenges
+    let finalExperince = currentExperience + amount
+
+    if(finalExperince >= experienceToNextLevel) {
+      finalExperince = finalExperince - experienceToNextLevel
+      levelUp()
+    }
+
+    setCurrentExperience(finalExperince)
+    setActiveChanllenges(null)
+    setChallengesCompleted(challengesCompleted + 1)
   }
 
   return (
@@ -56,9 +84,9 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         experienceToNextLevel,
         challengesCompleted,
         activeChallenges,
-        levelUp,
         startNewChallenge,
         resetChallenge,
+        completeChallenge,
       }}>
       {children}
     </ChallengesContext.Provider >

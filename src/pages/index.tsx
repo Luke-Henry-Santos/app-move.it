@@ -5,6 +5,7 @@ import { Countdown } from "../components/Countdown";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
 import { ChallengeBox } from "../components/ChallengeBox";
+import { CountdownProvider } from '../Contexts/CountdownContext';
 
 import styles from '../styles/pages/Home.module.css'
 
@@ -16,7 +17,12 @@ export default function Home() {
       </Head>
       <ExperienceBar />
 
+      <CountdownProvider>
       <section>
+        <label className={styles.switch}>
+          <input type="checkbox" onClick={() => document.body.classList.toggle("dark")} />
+          <span className={styles.slider} />
+        </label>
         <div >
           <Profile />
           <CompletedChanllenges />
@@ -26,6 +32,7 @@ export default function Home() {
           <ChallengeBox />
         </div>
       </section>
+      </CountdownProvider>
     </div>
   )
 }

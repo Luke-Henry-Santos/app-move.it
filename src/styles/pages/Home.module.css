@@ -18,11 +18,9 @@
 }
 
 .switch {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  border: 0;
-  margin-right: 1.25rem;
+  display: flex;
+  align-content: center;
+  position: relative;
   
   width: 60px;
   height: 34px;
